@@ -1,0 +1,12 @@
+version: '3'
+services:
+  grow_tent_project_api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+    - "80:8080"
+    volumes:
+    - /Users/joshthom/Documents/GitHub/Grow-tent-project:/usr/src/app
+volumes:
+  code: {} 
