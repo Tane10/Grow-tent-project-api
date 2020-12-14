@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import cors, { CorsOptions } from "cors";
 import helmet from "helmet";
 import routes from "./routes";
+import dbConnect from "./dbconfig";
 
 const app: Application = express();
 
@@ -25,8 +26,11 @@ app.options("*", cors(options)); //enable pre-flight
 // use all endpoints
 app.use(routes);
 
+
+
 try {
-    app.listen(app.get("port"), () => {
+    app.listen(app.get("port"), async () => {
+        await dbConnect();
         console.log("the server is running on port",
             app.get("port")
         );
