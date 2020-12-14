@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { UserDetails } from "../types";
 import UserModel from "../models/users";
 import { CustomError } from "../error";
@@ -9,9 +9,9 @@ require("dotenv").config();
 
 export async function signUp(req: Request, res: Response) {
     const userDetails: UserDetails = req.body;
-
     await UserModel.find({ email: userDetails.email })
         .then((user) => {
+            console.log(user.length)
             if (user.length >= 1) {
                 const duplicateUser: CustomError = {
                     statusCode: 409,
@@ -41,6 +41,7 @@ export async function signUp(req: Request, res: Response) {
                                     statusCode: 400,
                                     message: err.message
                                 }
+                                // console.log(err)
                                 res.send(newUserErr)
                             })
                     }
@@ -51,9 +52,10 @@ export async function signUp(req: Request, res: Response) {
 }
 
 
-export async function login(req: Request, res: Response) {
+export async function login(req: Request, res: Response, next: NextFunction) {
     const userDetails: UserDetails = req.body;
-    await UserModel.find({ email: userDetails.email })
+    try {
+        await UserModel.find({ email: userDetails.email })
         .then((user) => {
             if (user.length === 0) {
                 const noUser: CustomError = {
@@ -90,4 +92,13 @@ export async function login(req: Request, res: Response) {
 
             }
         });
+
+    } catch(err){
+        const loginError: CustomError = {
+            statusCode: 401,
+            message: "Auth Error"
+        }
+        res.send(loginError)
+    }
+   
 }

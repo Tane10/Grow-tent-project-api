@@ -1,4 +1,7 @@
 import bcrypt from "bcrypt";
+import jwt, { decode } from "jsonwebtoken";
+import { Response, Request, NextFunction } from "express"
+import { CustomError } from "../error";
 
 export default class AuthService {
     public static hashPassword(password: string, rounds: number, callback: (error: Error, hash: string) => void): void {
@@ -17,5 +20,28 @@ export default class AuthService {
                 callback('Invalid password match', null);
             }
         });
+    }
+
+    public static checkIfVaild(req: Request, res: Response, next: NextFunction) {
+        try {
+            const incommingToken = req.headers.authorization?.split(" ")[1];
+            if(incommingToken !== undefined) {
+                jwt.verify(incommingToken, `${process.env.JWT_KEY}`);
+                next();
+            }
+         
+        } catch (err) {
+
+            console.log(err)
+            const failed: CustomError = {
+                statusCode: 401,
+                message: "Auth failed"
+            }
+
+            return res.send(failed)
+
+        }
+        next();
+
     }
 }

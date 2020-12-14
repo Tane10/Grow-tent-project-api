@@ -4,7 +4,7 @@ import { signUp, login } from "./controllers/user_controller";
 // import { registerUser, updateUser, deleteUser, getUsers } from "./controllers/user_controller";
 // import { uploadImage } from "./controllers/upload_controller";
 // import { searchImage } from "./controllers/search_controller"
-import dbConnect from "./dbconfig";
+import AuthService from "./services/auth_service";
 
 var router: Router = express.Router();
 
