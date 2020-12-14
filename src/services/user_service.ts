@@ -4,10 +4,9 @@ import { CustomError } from "../error";
 import AuthService from "./auth_service";
 import { Document } from "mongoose";
 
-export default class SignUpService {
+export default class UserService {
 
     public static async signUpUser(userDetails: UserDetails): Promise<CustomError | undefined> {
-
         return await UserModel.find({ email: userDetails.email })
             .then((user) => {
                 if (user.length >= 1) {
@@ -54,30 +53,42 @@ export default class SignUpService {
             });
     }
 
-    // private userData: UserDataInterface = parsedUserDetails;
+    public static async loginUser(userDetails: UserDetails): Promise<CustomError | undefined> {
+        return await UserModel.find({ email: userDetails.email })
+            .then((user) => {
+                if (user.length === 0) {
+                    const noUser: CustomError = {
+                        statusCode: 400,
+                        message: "No user"
+                    }
+                    return noUser;
+                } else {
 
-    // private async validateUser(userDetails: reqUserDetail): Promise<string> {
-    //     let token: string = "";
+                    const userDBPassword = user[0].get("password");
 
-    //     this.userData.data.forEach((val) => {
-    //         if (val.email === userDetails.email && val.password === userDetails.password) {
-    //             token = val.token;
-    //         }
-    //     })
+                   const compare =  AuthService.compare(userDetails.password, userDBPassword, (error: string | null, match: boolean | null) => {
+                        if (error) {
+                            const password: CustomError = {
+                                statusCode: 401,
+                                message: "Invaild credentials"
+                            }
+                            return password;
+                            // passwords did not match
+                        } else {
+                            match = true;
+                            console.log("match")
+                            return match
+                            // passwords match
+                        }
+                    })
 
-    //     return token;
-    // };
+                    console.log(compare)
 
-    // public async checkUserCreds(userDetails: reqUserDetail): Promise<resUserDetail> {
 
-    //     const isUserVaild: string = await this.validateUser(userDetails);
+                }
+            })
+    }
 
-    //     let vaildUser: resUserDetail = {
-    //         email: userDetails.email,
-    //         password: userDetails.password,
-    //         token: isUserVaild
-    //     };
 
-    //     return vaildUser;
-    // }
+
 }

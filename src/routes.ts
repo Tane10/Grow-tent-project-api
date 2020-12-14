@@ -1,5 +1,5 @@
 import express, { Router, Response, Request } from "express";
-import {signUp} from "./controllers/signUp_controller";
+import { signUp, login } from "./controllers/user_controller";
 // import { login } from "./controllers/login_controller";
 // import { registerUser, updateUser, deleteUser, getUsers } from "./controllers/user_controller";
 // import { uploadImage } from "./controllers/upload_controller";
@@ -11,21 +11,16 @@ var router: Router = express.Router();
 // need to run in cloud env
 router.get("/", ((req: Request, res: Response) => { res.send('root'); }));
 
-router.post("/api/v1/login", async (login)=>{
-    await dbConnect();
-
-    console.log("connectin ")
-
-});
+router.post("/api/v1/login", login);
 
 router.post("/api/v1/signup", signUp);
 
 
-router.get("/api/v1/temps", (getTemps) =>{
+router.get("/api/v1/temps", (getTemps) => {
 
 });
 
-router.post("/api/v1/image/upload", (upload) =>{
+router.post("/api/v1/image/upload", (upload) => {
 
 });
 
