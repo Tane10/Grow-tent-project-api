@@ -13,7 +13,7 @@ router.get("/", ((req: Request, res: Response) => { res.send('root'); }));
 
 router.post("/api/v1/login", login);
 
-router.post("/api/v1/signup", signUp);
+router.post("/api/v1/signup", AuthService.checkIfVaild, signUp);
 
 
 router.get("/api/v1/temps", (getTemps) => {

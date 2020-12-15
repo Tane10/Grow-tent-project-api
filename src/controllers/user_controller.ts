@@ -9,13 +9,13 @@ require("dotenv").config();
 
 export async function signUp(req: Request, res: Response) {
     const userDetails: UserDetails = req.body;
+
     await UserModel.find({ email: userDetails.email })
         .then((user) => {
-            console.log(user.length)
             if (user.length >= 1) {
                 const duplicateUser: CustomError = {
                     statusCode: 409,
-                    message: "Auth Error"
+                    message: "Duplicate user"
                 }
                 res.send(duplicateUser);
             }
@@ -41,21 +41,24 @@ export async function signUp(req: Request, res: Response) {
                                     statusCode: 400,
                                     message: err.message
                                 }
-                                // console.log(err)
                                 res.send(newUserErr)
                             })
                     }
                 });
             }
-        });
-
+        }).catch((err) => {
+            const signUpError: CustomError = {
+                statusCode: 401,
+                message: err.message
+            }
+            res.send(signUpError)
+        })
 }
 
 
 export async function login(req: Request, res: Response, next: NextFunction) {
     const userDetails: UserDetails = req.body;
-    try {
-        await UserModel.find({ email: userDetails.email })
+    await UserModel.find({ email: userDetails.email })
         .then((user) => {
             if (user.length === 0) {
                 const noUser: CustomError = {
@@ -70,7 +73,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
                     if (error) {
                         const password: CustomError = {
                             statusCode: 401,
-                            message: "Auth Error"
+                            message: "Invaild credentials"
                         }
                         res.send(password)
                     }
@@ -84,21 +87,19 @@ export async function login(req: Request, res: Response, next: NextFunction) {
                         })
 
                         res.status(200).send({
-                            message: "Auth successful",
+                            message: "Auth uccessful",
                             token: token
                         })
                     }
                 })
 
             }
-        });
+        }).catch((err) => {
+            const loginError: CustomError = {
+                statusCode: 401,
+                message: err.message
+            }
+            res.send(loginError)
+        })
 
-    } catch(err){
-        const loginError: CustomError = {
-            statusCode: 401,
-            message: "Auth Error"
-        }
-        res.send(loginError)
-    }
-   
 }

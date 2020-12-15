@@ -29,19 +29,12 @@ export default class AuthService {
                 jwt.verify(incommingToken, `${process.env.JWT_KEY}`);
                 next();
             }
-         
         } catch (err) {
-
-            console.log(err)
             const failed: CustomError = {
                 statusCode: 401,
-                message: "Auth failed"
+                message: err.message
             }
-
             return res.send(failed)
-
         }
-        next();
-
     }
 }
