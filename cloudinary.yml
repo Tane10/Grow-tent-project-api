@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: solesearch
+  api_key: '568245127957932'
+  api_secret: O_yzBq1AyFK_PaeOkYgCDo6007c
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: solesearch
+  api_key: '568245127957932'
+  api_secret: O_yzBq1AyFK_PaeOkYgCDo6007c
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: solesearch
+  api_key: '568245127957932'
+  api_secret: O_yzBq1AyFK_PaeOkYgCDo6007c
+  enhance_image_tag: true
+  static_file_support: false
