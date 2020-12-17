@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import jwt, { decode } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { Response, Request, NextFunction } from "express"
 import { CustomError } from "../error";
 

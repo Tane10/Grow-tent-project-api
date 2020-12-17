@@ -1,8 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { UserDetails } from "../types";
 import UserModel from "../models/users";
 import { CustomError } from "../error";
-import { Document } from "mongoose";
 import AuthService from "../services/auth_service";
 import jwt from "jsonwebtoken";
 require("dotenv").config();
@@ -30,7 +29,7 @@ export default class UserController {
                             }
                             res.send(hashError);
                         } else {
-                            const newUser: Document = new UserModel({
+                            const newUser = new UserModel({
                                 email: userDetails.email,
                                 password: hash
                             });
@@ -57,7 +56,7 @@ export default class UserController {
             })
     }
 
-    public static async login(req: Request, res: Response, next: NextFunction) {
+    public static async login(req: Request, res: Response) {
         const userDetails: UserDetails = req.body;
         await UserModel.find({ email: userDetails.email })
             .then((user) => {
