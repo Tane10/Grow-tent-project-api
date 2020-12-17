@@ -9,10 +9,17 @@ interface SaveImageObject {
     filename: string
 }
 
+interface AllImagesMongo {
+    images: [{
+        _id: string,
+        originalname: string,
+        path: string
+    }]
+}
+
 export default class UploadService {
 
     public static async imageUpload(req: Request, res: Response) {
-
         const imageToSave: SaveImageObject = {
             originalname: req.file.originalname,
             mimetype: req.file.mimetype,
@@ -57,6 +64,34 @@ export default class UploadService {
                 }
                 res.send(saveErr);
             });
+
+    }
+
+    public static async getAllImages(req: Request, res: Response) {
+        await ImageModel.find()
+            .then((results) => {
+
+                let resultData: any = {
+                    images: []
+                }
+
+                results.forEach((result) => {
+                    resultData.images.push({
+                        _id: result._id,
+                        originalname: result.get("originalname"),
+                        path: result.get("path")
+                    })
+                })
+
+                let data: AllImagesMongo = resultData;
+                res.send(data)
+            }).catch((err) => {
+                const findErr: CustomError = {
+                    statusCode: 400,
+                    message: err.message
+                }
+                res.send(findErr)
+            })
 
     }
 }

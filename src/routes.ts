@@ -1,7 +1,7 @@
 import express, { Router, Response, Request } from "express";
 import UserController from "./controllers/user_controller";
 import AuthService from "./services/auth_service";
-import UploadService from "./services/upload_service";
+import ImageService from "./services/image_service";
 import cloudinary from "cloudinary";
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
@@ -33,8 +33,8 @@ router.post("/api/v1/signup", AuthService.checkIfVaild, UserController.signUp);
 
 router.get("/api/v1/temps", (getTemps) => {});
 
-router.post("/api/v1/image/upload", AuthService.checkIfVaild, parser.single("image"), UploadService.imageUpload);
+router.post("/api/v1/image/upload", AuthService.checkIfVaild, parser.single("image"), ImageService.imageUpload);
 
-router.get("/api/v1/image/get", (getImages) => {});
+router.get("/api/v1/image/get", ImageService.getAllImages);
 
 export default router;
