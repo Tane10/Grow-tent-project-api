@@ -31,7 +31,9 @@ router.post("/api/v1/login", UserController.login);
 
 router.post("/api/v1/signup", AuthService.checkIfVaild, UserController.signUp);
 
-router.get("/api/v1/temps", (getTemps) => {});
+router.get("/api/v1/temps", (req: Request, res: Response) => {
+    res.status(501).send("Route not added yet. https://http.cat/501")
+});
 
 router.post("/api/v1/image/upload", AuthService.checkIfVaild, parser.single("image"), ImageService.imageUpload);
 
