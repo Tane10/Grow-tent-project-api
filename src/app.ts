@@ -3,10 +3,10 @@ import cors, { CorsOptions } from "cors";
 import helmet from "helmet";
 import routes from "./routes";
 import dbConnect from "./dbconfig";
+import socketio from "socket.io";
+require("dotenv").config()
 
 const app: Application = express();
-
-require("dotenv").config()
 
 /** 
  * options for cors midddleware
@@ -26,8 +26,17 @@ app.options("*", cors(options)); //enable pre-flight
 // use all endpoints
 app.use(routes);
 
+// set up socket.io and bind to server
+let http = require("http").Server(app);
+let io = require("socket.io")(http);
+
 try {
-    app.listen(app.get("port"), async () => {
+    io.on("connection", (socket: any) => {
+        console.log("user connected");
+    });
+
+
+    http.listen(app.get("port"), async () => {
         await dbConnect();
         console.log("the server is running on port",
             app.get("port")

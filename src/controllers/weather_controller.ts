@@ -27,31 +27,26 @@ export default class WeatherController {
 
     public static async getCurrentWeather(req: Request, res: Response) {
 
-        const url = `api.openweathermap.org/data/2.5/weather?q=Rayleigh&appid=23a60634a56a8270f2050f0e7161a866&units=metric`;
+        const locationString = req.query.location;
 
-
-        // const config = {
-        //     method: 'get',
-        //     url: 'api.openweathermap.org/data/2.5/weather?q=Rayleigh&appid=23a60634a56a8270f2050f0e7161a866&units=metric',
-        //     headers: {}
-        // };
+        const url = `http://api.openweathermap.org/data/2.5/weather?q=${locationString}&appid=${process.env.OPEN_WEATHER_KEY}&units=metric`;
 
         try {
-            let weatherData = await axios.get(url);
+            let openWeatherMap = await axios.get(url);
 
-            console.log(weatherData)
+            let weatherData = openWeatherMap.data;
 
+            const weatherObject: WeatherObject = {
+                temp: weatherData.main.temp,
+                feels_like: weatherData.main.feels_like,
+                temp_min: weatherData.main.temp_min,
+                temp_max: weatherData.main.temp_max,
+                pressure: weatherData.main.pressure,
+                humidity: weatherData.main.humidity,
+                name: openWeatherMap.data.name,
+            }
 
-            // const weatherObject: WeatherObject = {
-            //     temp: weatherData.data.temp,
-            //     feels_like: weatherData.data.feels_like,
-            //     temp_min: weatherData.data.temp_min,
-            //     temp_max: weatherData.data.temp_max,
-            //     pressure: weatherData.data.pressure,
-            //     humidity: weatherData.data.humidity,
-            //     name: weatherData.data,
-            // }
-            // res.status(200).send(weatherObject);
+            res.status(200).send(weatherObject);
         }
         catch (err) {
             console.log(err)

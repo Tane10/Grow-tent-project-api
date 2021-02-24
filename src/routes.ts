@@ -16,6 +16,6 @@ router.get("/api/v1/temps", (req: Request, res: Response) => {
     res.status(501).send("Route not added yet. https://http.cat/501")
 });
 
-router.get("/api/v1/weather", AuthService.checkIfVaild, WeatherController.getCurrentWeather);
+router.get("/api/v1/weather", WeatherController.getCurrentWeather);
 
 export default router;
