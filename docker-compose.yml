@@ -7,6 +7,6 @@ services:
     ports:
     - "80:8080"
     volumes:
-    - /Users/joshthom/Documents/GitHub/Grow-tent-project:/usr/src/app
+    - /home/pi/Documents/Grow-tent-project-api:/usr/src/app
 volumes:
   code: {}

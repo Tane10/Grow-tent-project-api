@@ -26,8 +26,6 @@ app.options("*", cors(options)); //enable pre-flight
 // use all endpoints
 app.use(routes);
 
-
-
 try {
     app.listen(app.get("port"), async () => {
         await dbConnect();
