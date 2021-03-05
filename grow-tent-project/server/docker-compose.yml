@@ -5,8 +5,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-    - "80:8080"
+    - "50:5000"
     volumes:
-    - /home/josh/personal/Grow-tent-project-api:/usr/src/app
+    - /home/josh/personal/Grow-tent-project-api/grow-tent-project/server:/usr/src/app
 volumes:
   code: {}

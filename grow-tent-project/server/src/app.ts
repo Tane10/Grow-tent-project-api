@@ -20,7 +20,7 @@ const options: CorsOptions = {
 app.use(helmet());
 app.use(cors(options));
 app.use(express.json());
-app.set("port", process.env.PORT || 8080);
+app.set("port", process.env.PORT || 5000);
 app.options("*", cors(options)); //enable pre-flight
 
 // use all endpoints
@@ -33,6 +33,14 @@ let io = require("socket.io")(http);
 try {
     io.on("connection", (socket: any) => {
         console.log("user connected");
+
+
+        socket.emit("message", "you are now connected")
+
+        // socket.on('login', (message: any) => {
+        //     console.log("user logged in")
+        // })
+        socket.emit("message", "you are now connected")
     });
 
 

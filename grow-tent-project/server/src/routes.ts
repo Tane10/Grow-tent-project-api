@@ -6,7 +6,9 @@ import AuthService from "./services/auth_service";
 let router: Router = express.Router();
 
 // need to run in cloud env
-router.get("/", ((req: Request, res: Response) => { res.send('root'); }));
+router.get("/", ((req: Request, res: Response) => {
+    res.sendFile(__dirname + '/views/index.html');
+}));
 
 router.post("/api/v1/login", UserController.login);
 
