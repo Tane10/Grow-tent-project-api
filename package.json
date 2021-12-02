@@ -7,7 +7,8 @@
         "dev": "nodemon ./src/app.ts",
         "test": "jest",
         "build": "tsc -b",
-        "start": "node dist/app.js"
+        "start": "node dist/app.js",
+        "lint": "eslint . --ext .ts"
     },
     "repository": {
         "type": "git",
@@ -40,8 +41,11 @@
         "@types/jsonwebtoken": "^8.5.0",
         "@types/multer": "^1.4.5",
         "@types/node": "^14.14.11",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
         "jest": "^26.6.3",
         "nodemon": "^2.0.6",
+        "prettier": "2.5.0",
         "save": "^2.4.0",
         "ts-jest": "^26.4.4",
         "ts-node": "^9.1.1",
