@@ -1,7 +1,33 @@
 import { Response, Request } from 'express';
 import ImageModel, { ImageDocument } from '../schema/image.schema';
+import Logger from '../logger';
 
 import { CustomError } from '../error';
+
+export const getAllImages = async () => {
+  try {
+    const images = await ImageModel.find();
+  } catch (error) {
+    Logger.error({ message: error });
+  }
+  //     const
+  //   await ImageModel.find().then((results) => {
+  //     const resultData: any = {
+  //       images: []
+  //     };
+
+  //     results.forEach((result) => {
+  //       resultData.images.push({
+  //         _id: result._id,
+  //         originalname: result.get('originalname'),
+  //         path: result.get('path')
+  //       });
+  //     });
+
+  //     const data: AllImagesMongo = resultData;
+  //     res.send(data);
+  //   });
+};
 
 interface SaveImageObject {
   originalname: string;
