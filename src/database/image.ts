@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import ImageModel, { ImageDocument } from '../schema/image.schema';
-import Logger from '../logger';
+import Logger from '../utils/logger';
 
 import { CustomError } from '../error';
 
