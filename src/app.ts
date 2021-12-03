@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import cors, { CorsOptions } from 'cors';
 import helmet from 'helmet';
 import routes from './routes';
-import dbConnect from './dbconfig';
+import dbConnect from './config/dbconfig';
 
 const app: Application = express();
 

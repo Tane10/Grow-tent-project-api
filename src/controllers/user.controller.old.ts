@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 import { UserDetails } from '../types';
 import UserModel from '../models/users';
 import { CustomError } from '../error';
-import AuthService from '../services/auth_service';
+import AuthService from '../services/auth.service';
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
 export default class UserController {
-  public static async signUp(req: Request, res: Response) {
+  public signUp = (req: Request, res: Response) => {
     const userDetails: UserDetails = req.body;
 
     await UserModel.find({ email: userDetails.email })
@@ -55,7 +55,7 @@ export default class UserController {
         };
         res.send(signUpError);
       });
-  }
+  };
 
   public static async login(req: Request, res: Response) {
     const userDetails: UserDetails = req.body;

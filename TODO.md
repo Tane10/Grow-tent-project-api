@@ -6,3 +6,6 @@ TODO:
 - brake out routes into files / classes
 - Add read me
 - Add utils files with helpful functions in
+
+- refactor the controllers and services
+- user_controller

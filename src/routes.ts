@@ -1,7 +1,7 @@
 import express, { Router, Response, Request } from 'express';
-import UserController from './controllers/user_controller';
-import AuthService from './services/auth_service';
-import ImageService from './services/image_service';
+import UserController from './controllers/user.controller.old';
+import AuthService from './services/auth.service';
+import ImageService from './services/image.service';
 import cloudinary from 'cloudinary';
 import multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
